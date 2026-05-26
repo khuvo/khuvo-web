@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khuvo - Smart Cleaning & Maintenance Services | Live Dashboard</title>
+  
+  <!-- Premium Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;950&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tailwind Configuration for Khuvo custom branding -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            khuvo: {
+              navy: "#0B1220",
+              navyLight: "#131C30",
+              blue: "#2563EB",
+              cyan: "#06B6D4",
+              slate: "#94A3B8",
+            }
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Outfit", "sans-serif"],
+          },
+          boxShadow: {
+            glow: "0 0 20px rgba(6, 182, 212, 0.15)",
+            blueGlow: "0 0 25px rgba(37, 99, 235, 0.25)",
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Premium Custom Styling -->
+  <style>
+    body {
+      background-color: #0b1220;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b1220;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 9999px;
+      border: 2px solid #0b1220;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2563eb;
+    }
+
+    /* Glassmorphism Panels */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-panel-hover {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-panel-hover:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(6, 182, 212, 0.3);
+      box-shadow: 0 0 30px rgba(6, 182, 212, 0.1);
+      transform: translateY(-4px);
+    }
+
+    /* Tech Grid Backdrop */
+    .tech-grid {
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: center center;
+    }
+
+    /* Glow Orbs */
+    .glow-orb-cyan {
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(6, 182, 212, 0) 70%);
+    }
+    .glow-orb-blue {
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, rgba(37, 99, 235, 0) 70%);
+    }
+
+    /* Floating Micro Animations */
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Hide default scrollbars on horizontal lists */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="antialiased bg-khuvo-navy text-white selection:bg-khuvo-cyan selection:text-khuvo-navy">
+
+  <!-- ==================== DYNAMIC FLOATING RADIAL ORBS ==================== -->
+  <div class="fixed top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full glow-orb-cyan blur-[120px] -z-10 pointer-events-none opacity-40"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full glow-orb-blue blur-[120px] -z-10 pointer-events-none opacity-40"></div>
+
+  <!-- ==================== HEADER / NAVIGATION ==================== -->
+  <nav class="w-full max-w-7xl mx-auto px-6 py-5 flex items-center justify-between z-20 relative">
+    <div class="flex items-center gap-2">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-r from-khuvo-blue to-khuvo-cyan flex items-center justify-center font-display font-extrabold text-xl tracking-tighter text-white shadow-glow select-none">
+        K
+      </div>
+      <span class="font-display font-black text-2xl tracking-widest text-white uppercase">
+        KHUVO<span class="text-khuvo-cyan font-bold">.</span>
+      </span>
+    </div>
+
+    <!-- Quick Directory links -->
+    <div class="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider text-khuvo-slate">
+      <a href="#services" class="hover:text-white transition-colors">Services</a>
+      <a href="#why-choose-us" class="hover:text-white transition-colors">Technology</a>
+      <a href="#before-after" class="hover:text-white transition-colors">Before/After</a>
+      <a href="#calculator" class="hover:text-white transition-colors">Pricing Engine</a>
+      <a href="#subscriptions" class="hover:text-white transition-colors">Subscriptions</a>
+      <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+    </div>
+
+    <div>
+      <button 
+        onclick="openBookingModal('solar')"
+        class="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-khuvo-cyan/40 text-xs font-bold uppercase tracking-wider text-white transition-all flex items-center gap-1.5"
+      >
+        B2B Portal <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==================== PREMIUM HERO SECTION ==================== -->
+  <header class="w-full max-w-7xl mx-auto px-6 py-12 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 tech-grid rounded-3xl overflow-hidden border border-white/5 bg-white/[0.01] mb-12">
+    <div class="lg:col-span-7 space-y-8 text-left">
+      <!-- Trust Badge -->
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-white">
+        <span class="flex items-center text-amber-400 gap-0.5 bg-amber-400/10 px-2 py-0.5 rounded-full font-semibold">
+          ★ 4.9
+        </span>
+        <span class="text-khuvo-slate font-medium">Trusted Maintenance Partner of Modern India</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-black font-display tracking-tight text-white leading-[1.1]">
+        Smart Cleaning <br>
+        Services for <br>
+        <span class="bg-gradient-to-r from-khuvo-blue via-khuvo-cyan to-white bg-clip-text text-transparent">
+          Modern India
+        </span>
+      </h1>
+
+      <p class="text-base sm:text-lg text-khuvo-slate max-w-xl leading-relaxed font-light font-sans">
+        Solar Panel Cleaning, Water Tank Sanitizing, and Doorstep Vehicle Wash — all engineered for operational efficiency, water conservation, and eco-safe execution.
+      </p>
+
+      {/* Buttons */}
+      <div class="flex flex-col sm:flex-row gap-4 max-w-md sm:max-w-none">
+        <button 
+          onclick="openBookingModal('solar')"
+          class="px-8 py-4 bg-gradient-to-r from-khuvo-blue to-khuvo-cyan rounded-xl text-white font-bold uppercase tracking-wider text-xs shadow-glow hover:shadow-blueGlow hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
+        >
+          Book Service Now
+        </button>
+        <button 
+          onclick="window.open('https://wa.me/919999999999?text=Hi%20Khuvo!%20I\'m%20interested%20in%20arranging%20a%20professional%20solar%20panel/tank%20cleaning%20inspection.', '_blank')"
+          class="px-8 py-4 bg-white/5 border border-white/10 rounded-xl text-white font-bold uppercase tracking-wider text-xs hover:bg-white/10 hover:border-khuvo-cyan/40 active:scale-95 transition-all flex items-center justify-center gap-2"
+        >
+          WhatsApp Dispatch
+        </button>
+      </div>
+
+      {/* Pillars */}
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-white/5 max-w-lg text-xs font-semibold text-white">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-khuvo-cyan shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.952 11.952 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          Verified Professionals
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-khuvo-cyan shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Same-Day Dispatch
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-khuvo-cyan shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          Eco-Safe Surfactants
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side Dashboard Mockup -->
+    <div class="lg:col-span-5 relative w-full flex items-center justify-center z-10">
+      <div class="w-full max-w-[420px] aspect-[9/10] rounded-2xl glass-panel shadow-blueGlow border border-white/10 p-6 flex flex-col justify-between overflow-hidden animate-float">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-khuvo-blue via-khuvo-cyan to-transparent"></div>
+
+        <div class="flex items-center justify-between pb-4 border-b border-white/5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-2.5 h-2.5 rounded-full bg-khuvo-cyan animate-ping"></div>
+            <div>
+              <span class="text-[10px] text-khuvo-slate uppercase font-semibold tracking-wider block">Live Node</span>
+              <span class="text-xs font-bold text-white">Lucknow Regional</span>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-khuvo-cyan bg-khuvo-cyan/10">
+            SECURE
+          </span>
+        </div>
+
+        <div class="py-6 space-y-4">
+          <div class="p-4 rounded-xl bg-white/5 border border-white/5 space-y-2 text-left">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-khuvo-slate">Rooftop Solar Efficiency</span>
+              <span class="text-emerald-400 font-bold">+30% Gain</span>
+            </div>
+            <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-khuvo-blue to-khuvo-cyan w-[84%] rounded-full"></div>
+            </div>
+            <span class="text-[9px] text-khuvo-slate block">Output efficiency restored after dust layer vacuumed.</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white/5 border border-white/5 space-y-2 text-left">
+            <span class="text-xs text-khuvo-slate block">Current Hub Booking Queue</span>
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="text-white">Active Order #492</span>
+              <span class="text-khuvo-cyan font-semibold">On Route (Kanpur)</span>
+            </div>
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="text-white/60">Active Order #491</span>
+              <span class="text-emerald-400 font-medium">Detailed & Done</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-white/5 flex items-center justify-between text-left">
+          <div>
+            <span class="text-[10px] text-khuvo-slate block">Demineralized Water Tech</span>
+            <span class="text-xs font-bold text-white">pH 7 Neutral Protection</span>
+          </div>
+          <button 
+            onclick="openBookingModal('solar')"
+            class="px-4 py-2 text-[10px] uppercase font-bold tracking-wider rounded-lg bg-khuvo-cyan text-khuvo-navy hover:bg-white transition-colors"
+          >
+            Schedule Dispatch
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== SERVICES SECTION ==================== -->
+  <section id="services" class="py-20 bg-khuvo-navy relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-khuvo-cyan flex items-center justify-center gap-1.5 font-display">
+          ★ Certified Infrastructure Care
+        </span>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-display tracking-tight text-white">
+          Smart Cleaning for Homes & Systems
+        </h2>
+        <p class="text-sm text-khuvo-slate font-light font-sans">
+          Eco-safe formulas, background-checked operators, and photographic before/after results.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Card 1: Solar -->
+        <div class="relative rounded-2xl glass-panel p-6 flex flex-col justify-between border-khuvo-cyan/30 shadow-glow transition-all duration-300 group">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-full glow-orb-cyan -z-10 blur-xl opacity-0 group-hover:opacity-30 transition-opacity"></div>
+          <div>
+            <div class="flex items-start justify-between mb-6">
+              <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-khuvo-cyan/30 text-khuvo-cyan transition-all">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-khuvo-cyan bg-khuvo-cyan/10">
+                +30% Output
+              </span>
+            </div>
+            <span class="text-xs text-khuvo-slate block font-semibold uppercase">Starting From</span>
+            <span class="text-2xl font-black text-white font-display block mb-4">₹999 <span class="text-xs text-khuvo-slate font-medium">/ clean</span></span>
+            <h3 class="text-lg font-bold text-white mb-4 group-hover:text-khuvo-cyan transition-colors font-display">Solar Panel Cleaning</h3>
+            <ul class="space-y-2.5 mb-8 text-xs text-khuvo-slate text-left">
+              <li class="flex items-start gap-2">✓ specialized AR-Coating friendly formula</li>
+              <li class="flex items-start gap-2">✓ Soft water demineralization rinse</li>
+              <li class="flex items-start gap-2">✓ Complete bird droppings & soot vacuum</li>
+            </ul>
+          </div>
+          <button onclick="openBookingModal('solar')" class="w-full py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-khuvo-blue to-khuvo-cyan text-white shadow-glow flex items-center justify-center gap-1.5">
+            Book Solar Cleaning
+          </button>
+        </div>
+
+        <!-- Card 2: Tank -->
+        <div class="relative rounded-2xl glass-panel p-6 flex flex-col justify-between hover:border-white/20 transition-all duration-300 group">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-full glow-orb-cyan -z-10 blur-xl opacity-0 group-hover:opacity-30 transition-opacity"></div>
+          <div>
+            <div class="flex items-start justify-between mb-6">
+              <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-khuvo-cyan/30 text-khuvo-cyan transition-all">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-khuvo-cyan bg-khuvo-cyan/10">
+                Sterilized UV
+              </span>
+            </div>
+            <span class="text-xs text-khuvo-slate block font-semibold uppercase">Starting From</span>
+            <span class="text-2xl font-black text-white font-display block mb-4">₹1,299 <span class="text-xs text-khuvo-slate font-medium">/ tank</span></span>
+            <h3 class="text-lg font-bold text-white mb-4 group-hover:text-khuvo-cyan transition-colors font-display">Water Tank Cleaning</h3>
+            <ul class="space-y-2.5 mb-8 text-xs text-khuvo-slate text-left">
+              <li class="flex items-start gap-2">✓ High pressure mud vacuum extraction</li>
+              <li class="flex items-start gap-2">✓ Safe UV anti-bacterial sanitization</li>
+              <li class="flex items-start gap-2">✓ Eliminates pathogens & scale deposits</li>
+            </ul>
+          </div>
+          <button onclick="openBookingModal('tank')" class="w-full py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-khuvo-cyan/30 flex items-center justify-center gap-1.5">
+            Book Tank Cleaning
+          </button>
+        </div>
+
+        <!-- Card 3: Car wash -->
+        <div class="relative rounded-2xl glass-panel p-6 flex flex-col justify-between hover:border-white/20 transition-all duration-300 group">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-full glow-orb-cyan -z-10 blur-xl opacity-0 group-hover:opacity-30 transition-opacity"></div>
+          <div>
+            <div class="flex items-start justify-between mb-6">
+              <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-khuvo-cyan/30 text-khuvo-cyan transition-all">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-khuvo-cyan bg-khuvo-cyan/10">
+                Premium Foam
+              </span>
+            </div>
+            <span class="text-xs text-khuvo-slate block font-semibold uppercase">Starting From</span>
+            <span class="text-2xl font-black text-white font-display block mb-4">₹499 <span class="text-xs text-khuvo-slate font-medium">/ wash</span></span>
+            <h3 class="text-lg font-bold text-white mb-4 group-hover:text-khuvo-cyan transition-colors font-display">Doorstep Car Wash</h3>
+            <ul class="space-y-2.5 mb-8 text-xs text-khuvo-slate text-left">
+              <li class="flex items-start gap-2">✓ Dual foam pressure wash detailing</li>
+              <li class="flex items-start gap-2">✓ Interior dashboard gloss glaze</li>
+              <li class="flex items-start gap-2">✓ Scratch-safe microfiber towels dry</li>
+            </ul>
+          </div>
+          <button onclick="openBookingModal('car')" class="w-full py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-khuvo-cyan/30 flex items-center justify-center gap-1.5">
+            Book Doorstep Car Wash
+          </button>
+        </div>
+
+        <!-- Card 4: Bike Wash -->
+        <div class="relative rounded-2xl glass-panel p-6 flex flex-col justify-between hover:border-white/20 transition-all duration-300 group">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-full glow-orb-cyan -z-10 blur-xl opacity-0 group-hover:opacity-30 transition-opacity"></div>
+          <div>
+            <div class="flex items-start justify-between mb-6">
+              <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-khuvo-cyan/30 text-khuvo-cyan transition-all">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-khuvo-cyan bg-khuvo-cyan/10">
+                Chain Lubed
+              </span>
+            </div>
+            <span class="text-xs text-khuvo-slate block font-semibold uppercase">Starting From</span>
+            <span class="text-2xl font-black text-white font-display block mb-4">₹249 <span class="text-xs text-khuvo-slate font-medium">/ wash</span></span>
+            <h3 class="text-lg font-bold text-white mb-4 group-hover:text-khuvo-cyan transition-colors font-display">Doorstep Bike Wash</h3>
+            <ul class="space-y-2.5 mb-8 text-xs text-khuvo-slate text-left">
+              <li class="flex items-start gap-2">✓ Intensive chain degrease & lubing</li>
+              <li class="flex items-start gap-2">✓ Deep high pressure engine block wash</li>
+              <li class="flex items-start gap-2">✓ Shined and polished in 30 minutes</li>
+            </ul>
+          </div>
+          <button onclick="openBookingModal('bike')" class="w-full py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-khuvo-cyan/30 flex items-center justify-center gap-1.5">
+            Book Doorstep Bike Wash
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WHY CHOOSE KHUVO ==================== -->
+  <section id="why-choose-us" class="py-20 bg-khuvo-navyLight">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <div class="max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-khuvo-cyan block font-display">
+          ★ Operational Efficiency Tech
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black font-display text-white">
+          Why Modern Estates Trust Khuvo
+        </h2>
+        <p class="text-sm text-khuvo-slate font-light">
+          We bring high-end engineering standards to basic property maintenance.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Pillar 1 -->
+        <div class="p-6 rounded-2xl bg-khuvo-navy border border-white/5 text-left">
+          <div class="w-12 h-12 rounded-xl bg-white/5 text-khuvo-cyan flex items-center justify-center mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.952 11.952 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="text-base font-bold text-white mb-2 font-display">Verified Professionals</h3>
+          <p class="text-xs text-khuvo-slate font-light leading-relaxed">Rigorous background checks, professional uniforms, and deep industrial safety training.</p>
+        </div>
+        <!-- Pillar 2 -->
+        <div class="p-6 rounded-2xl bg-khuvo-navy border border-white/5 text-left">
+          <div class="w-12 h-12 rounded-xl bg-white/5 text-khuvo-cyan flex items-center justify-center mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </div>
+          <h3 class="text-base font-bold text-white mb-2 font-display">Eco-Safe Formulas</h3>
+          <p class="text-xs text-khuvo-slate font-light leading-relaxed">PH-neutral, organic biodegradable solutions protecting anti-reflective solar coatings and plant life.</p>
+        </div>
+        <!-- Pillar 3 -->
+        <div class="p-6 rounded-2xl bg-khuvo-navy border border-white/5 text-left">
+          <div class="w-12 h-12 rounded-xl bg-white/5 text-khuvo-cyan flex items-center justify-center mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h3 class="text-base font-bold text-white mb-2 font-display">Photo-Proof Reports</h3>
+          <p class="text-xs text-khuvo-slate font-light leading-relaxed">Before and After photographs uploaded to our digital platform for clear customer confirmation.</p>
+        </div>
+        <!-- Pillar 4 -->
+        <div class="p-6 rounded-2xl bg-khuvo-navy border border-white/5 text-left">
+          <div class="w-12 h-12 rounded-xl bg-white/5 text-khuvo-cyan flex items-center justify-center mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3 class="text-base font-bold text-white mb-2 font-display">Water-Saving Tech</h3>
+          <p class="text-xs text-khuvo-slate font-light leading-relaxed">High-pressure clean jets consume up to 70% less water than typical domestic hose washes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BEFORE / AFTER SLIDER ==================== -->
+  <section id="before-after" class="py-20 bg-khuvo-navy relative overflow-hidden">
+    <style>
+      @keyframes shimmer-sweep {
+        0% { transform: translateX(-150%) skewX(-20deg); }
+        100% { transform: translateX(150%) skewX(-20deg); }
+      }
+      .animate-shimmer-sweep {
+        animation: shimmer-sweep 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      @keyframes float-dust {
+        0%, 100% { transform: translateY(0px) scale(1); opacity: 0.3; }
+        50% { transform: translateY(-5px) scale(1.1); opacity: 0.5; }
+      }
+      .animate-float-dust {
+        animation: float-dust 4s ease-in-out infinite;
+      }
+      @keyframes pulse-energy {
+        0%, 100% { opacity: 0.4; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.25); }
+      }
+      .animate-pulse-energy {
+        animation: pulse-energy 2s ease-in-out infinite;
+      }
+      @keyframes water-bubbles {
+        0% { transform: translateY(10px) translateX(0); opacity: 0; }
+        50% { opacity: 0.8; }
+        100% { transform: translateY(-30px) translateX(5px); opacity: 0; }
+      }
+      .animate-bubble-1 { animation: water-bubbles 3s ease-in infinite; }
+      .animate-bubble-2 { animation: water-bubbles 4s ease-in 1s infinite; }
+      .animate-bubble-3 { animation: water-bubbles 2.5s ease-in 1.8s infinite; }
+    </style>
+
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-12 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-khuvo-cyan flex items-center justify-center gap-1.5 font-display">
+          ★ Physical proof
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black font-display text-white">
+          See the Khuvo Transformation
+        </h2>
+        <p class="text-sm text-khuvo-slate font-light">
+          Slide the handle or toggle Auto-Sweep to view dirty structures restored to peak factory output and efficiency.
+        </p>
+      </div>
+
+      <!-- Before After Tabs & Play/Pause -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto mb-6 bg-white/[0.02] border border-white/5 p-2 rounded-2xl">
+        <div class="flex gap-2 w-full sm:w-auto">
+          <button onclick="toggleSliderTab('solar')" id="tab-solar" class="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-khuvo-cyan text-khuvo-navy font-display shadow-glow">
+            Solar Arrays
+          </button>
+          <button onclick="toggleSliderTab('tank')" id="tab-tank" class="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-white font-display hover:bg-white/10">
+            Water Tank
+          </button>
+          <button onclick="toggleSliderTab('car')" id="tab-car" class="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-white font-display hover:bg-white/10">
+            Premium Vehicle
+          </button>
+        </div>
+
+        <button
+          id="btn-auto-sweep"
+          onclick="toggleAutoSweep()"
+          class="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 border bg-rose-500/10 border-rose-500/30 text-rose-400 hover:bg-rose-500/20"
+        >
+          <span id="sweep-icon">⏸</span> <span id="sweep-text">Pause Auto-Sweep</span>
+        </button>
+      </div>
+
+      <!-- Draggable Canvas Container -->
+      <div 
+        id="slider-container"
+        class="relative w-full aspect-[16/9] max-w-4xl mx-auto rounded-3xl border border-white/10 overflow-hidden cursor-ew-resize select-none bg-khuvo-navyLight shadow-glow"
+      >
+        <!-- UNDERLAYER: THE GLEAMING "AFTER" RESULT -->
+        <div class="absolute inset-0 w-full h-full flex items-center justify-center text-center">
+          
+          <!-- Solar After -->
+          <div id="after-solar" class="w-full h-full bg-gradient-to-tr from-khuvo-navy via-slate-900 to-sky-950 flex items-center justify-center relative">
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.15)_1px,transparent_1px)] bg-[size:24px_24px] opacity-80"></div>
+            
+            <div class="w-[85%] h-[80%] border border-slate-700/80 p-2.5 rounded-2xl bg-slate-950/80 relative flex items-center justify-center shadow-2xl">
+              <!-- Grid of 12 cells -->
+              <div class="grid grid-cols-4 grid-rows-3 gap-2.5 w-full h-full">
+                <div class="relative rounded-lg overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-blue-900 via-sky-950 to-blue-950 shadow-[inset_0_0_15px_rgba(6,182,212,0.25)]">
+                  <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                  <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-60 animate-pulse-energy"></span>
+                  </div>
+                </div>
+                <div class="relative rounded-lg overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-blue-900 via-sky-950 to-blue-950 shadow-[inset_0_0_15px_rgba(6,182,212,0.25)]">
+                  <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                  <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-60 animate-pulse-energy"></span>
+                  </div>
+                </div>
+                <div class="relative rounded-lg overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-blue-900 via-sky-950 to-blue-950 shadow-[inset_0_0_15px_rgba(6,182,212,0.25)]">
+                  <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                  <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-60 animate-pulse-energy"></span>
+                  </div>
+                </div>
+                <div class="relative rounded-lg overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-blue-900 via-sky-950 to-blue-950 shadow-[inset_0_0_15px_rgba(6,182,212,0.25)]">
+                  <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                  <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-60 animate-pulse-energy"></span>
+                  </div>
+                </div>
+                <div class="relative rounded-lg overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-blue-900 via-sky-950 to-blue-950 shadow-[inset_0_0_15px_rgba(6,182,212,0.25)]">
+                  <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                  <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-60 animate-pulse-energy"></span>
+                  </div>
+                </div>
+                <div class="relative rounded-lg overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-blue-900 via-sky-950 to-blue-950 shadow-[inset_0_0_15px_rgba(6,182,212,0.25)]">
+                  <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                  <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-60 animate-pulse-energy"></span>
+                  </div>
+                </div>
+                <div class="relative rounded-lg overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-blue-900 via-sky-950 to-blue-950 shadow-[inset_0_0_15px_rgba(6,182,212,0.25)]">
+                  <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                  <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-60 animate-pulse-energy"></span>
+                  </div>
+                </div>
+                <div class="relative rounded-lg overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-blue-900 via-sky-950 to-blue-950 shadow-[inset_0_0_15px_rgba(6,182,212,0.25)]">
+                  <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                  <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-60 animate-pulse-energy"></span>
+                  </div>
+                </div>
+                <div class="relative rounded-lg overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-blue-900 via-sky-950 to-blue-950 shadow-[inset_0_0_15px_rgba(6,182,212,0.25)]">
+                  <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                  <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-60 animate-pulse-energy"></span>
+                  </div>
+                </div>
+                <div class="relative rounded-lg overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-blue-900 via-sky-950 to-blue-950 shadow-[inset_0_0_15px_rgba(6,182,212,0.25)]">
+                  <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                  <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-60 animate-pulse-energy"></span>
+                  </div>
+                </div>
+                <div class="relative rounded-lg overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-blue-900 via-sky-950 to-blue-950 shadow-[inset_0_0_15px_rgba(6,182,212,0.25)]">
+                  <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                  <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-60 animate-pulse-energy"></span>
+                  </div>
+                </div>
+                <div class="relative rounded-lg overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-blue-900 via-sky-950 to-blue-950 shadow-[inset_0_0_15px_rgba(6,182,212,0.25)]">
+                  <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                  <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.06)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-60 animate-pulse-energy"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Silver busbars -->
+              <div class="absolute inset-x-0 inset-y-12 pointer-events-none flex flex-col justify-around py-2">
+                <div class="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent animate-pulse"></div>
+                <div class="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent animate-pulse"></div>
+              </div>
+
+              <!-- Gleaming Reflection -->
+              <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent -translate-x-full animate-shimmer-sweep pointer-events-none"></div>
+            </div>
+
+            <div class="absolute top-6 right-6 z-20 space-y-2 flex flex-col items-end">
+              <span class="px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-[10px] font-extrabold uppercase tracking-widest shadow-glow backdrop-blur-md">
+                ⚡ OUTPUT DELTA: +34.2%
+              </span>
+            </div>
+          </div>
+
+          <!-- Tank After -->
+          <div id="after-tank" class="w-full h-full bg-gradient-to-br from-khuvo-navy via-cyan-950 to-emerald-950 flex items-center justify-center relative hidden">
+            <div class="w-[70%] h-[75%] border border-cyan-500/40 rounded-t-[100px] rounded-b-3xl bg-cyan-950/40 relative overflow-hidden flex flex-col justify-end p-2 shadow-2xl">
+              <div class="w-full h-[85%] rounded-b-2xl bg-gradient-to-t from-cyan-600/30 via-emerald-600/20 to-sky-400/10 border-t border-cyan-400/40 relative overflow-hidden">
+                <div class="absolute top-0 inset-x-0 h-10 bg-gradient-to-b from-white/10 to-transparent"></div>
+                <div class="absolute inset-x-1/3 inset-y-0 bg-gradient-to-r from-transparent via-cyan-400/15 to-transparent blur-md"></div>
+                <div class="absolute bottom-4 left-[20%] w-2.5 h-2.5 bg-white/40 rounded-full animate-bubble-1"></div>
+                <div class="absolute bottom-8 left-[45%] w-2 h-2 bg-white/30 rounded-full animate-bubble-2"></div>
+                <div class="absolute bottom-2 left-[70%] w-3 h-3 bg-white/40 rounded-full animate-bubble-3"></div>
+              </div>
+            </div>
+
+            <div class="absolute top-6 right-6 z-20 space-y-2 flex flex-col items-end">
+              <span class="px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-[10px] font-extrabold uppercase tracking-widest shadow-glow backdrop-blur-md">
+                💧 BACTERIA LEVEL: 0.00%
+              </span>
+            </div>
+          </div>
+
+          <!-- Car After -->
+          <div id="after-car" class="w-full h-full bg-gradient-to-tr from-khuvo-navy via-slate-900 to-blue-950 flex items-center justify-center relative hidden">
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(37,99,235,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,0.08)_1px,transparent_1px)] bg-[size:30px_30px] opacity-80"></div>
+            <div class="w-[80%] h-[70%] bg-gradient-to-r from-slate-800 via-blue-950 to-slate-900 border border-blue-500/30 rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between shadow-2xl">
+              <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-cyan-400/10 to-transparent -translate-x-full animate-shimmer-sweep pointer-events-none"></div>
+              <div class="absolute top-1/4 left-0 w-full h-[1.5px] bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+              <div class="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+              <div class="relative z-10">
+                <div class="flex items-center gap-2 text-khuvo-cyan">
+                  <span>✦</span>
+                  <span class="text-xs uppercase tracking-widest font-extrabold font-display">Mirror Finish Detailing</span>
+                </div>
+              </div>
+              <div class="relative z-10 self-end text-right">
+                <span class="text-[10px] text-white/50 block">Showroom Nano-Gleam Seal</span>
+                <span class="text-sm font-bold text-white font-display">Hydrophobic Protection Active</span>
+              </div>
+            </div>
+
+            <div class="absolute top-6 right-6 z-20 space-y-2 flex flex-col items-end">
+              <span class="px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-[10px] font-extrabold uppercase tracking-widest shadow-glow backdrop-blur-md">
+                GLOSS GLAZE: 100% SECURE
+              </span>
+            </div>
+          </div>
+
+          <span class="absolute bottom-4 right-4 z-20 px-3 py-1.5 rounded-lg bg-emerald-500/25 border border-emerald-500/40 text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 backdrop-blur-md">
+            AFTER KHUVO
+          </span>
+        </div>
+
+        <!-- OVERLAYER: THE DUSTY "BEFORE" RESULT (CLIPPED BY JS WIDTH) -->
+        <div 
+          id="slider-overlay"
+          class="absolute inset-y-0 left-0 h-full overflow-hidden z-10 border-r border-khuvo-cyan/50"
+          style="width: 50%;"
+        >
+          <div class="absolute inset-y-0 left-0 w-full h-full min-w-[320px] md:min-w-[896px] flex items-center justify-center bg-zinc-950 text-center">
+            
+            <!-- Solar Before -->
+            <div id="before-solar" class="w-full h-full bg-gradient-to-tr from-neutral-950 via-neutral-900 to-amber-950/20 flex items-center justify-center relative">
+              <div class="absolute inset-0 bg-black/60 z-[2]"></div>
+              <div class="absolute inset-0 bg-[linear-gradient(rgba(120,80,30,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(120,80,30,0.06)_1px,transparent_1px)] bg-[size:24px_24px] opacity-60"></div>
+              
+              <div class="w-[85%] h-[80%] border border-neutral-800/80 p-2.5 rounded-2xl bg-neutral-900/80 relative flex items-center justify-center shadow-lg z-[3]">
+                <div class="grid grid-cols-4 grid-rows-3 gap-2.5 w-full h-full opacity-60">
+                  <div class="relative rounded-lg overflow-hidden border border-amber-950/30 bg-gradient-to-br from-neutral-900 via-zinc-950 to-neutral-950">
+                    <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  </div>
+                  <div class="relative rounded-lg overflow-hidden border border-amber-950/30 bg-gradient-to-br from-neutral-900 via-zinc-950 to-neutral-950">
+                    <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  </div>
+                  <div class="relative rounded-lg overflow-hidden border border-amber-950/30 bg-gradient-to-br from-neutral-900 via-zinc-950 to-neutral-950">
+                    <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  </div>
+                  <div class="relative rounded-lg overflow-hidden border border-amber-950/30 bg-gradient-to-br from-neutral-900 via-zinc-950 to-neutral-950">
+                    <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  </div>
+                  <div class="relative rounded-lg overflow-hidden border border-amber-950/30 bg-gradient-to-br from-neutral-900 via-zinc-950 to-neutral-950">
+                    <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  </div>
+                  <div class="relative rounded-lg overflow-hidden border border-amber-950/30 bg-gradient-to-br from-neutral-900 via-zinc-950 to-neutral-950">
+                    <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  </div>
+                  <div class="relative rounded-lg overflow-hidden border border-amber-950/30 bg-gradient-to-br from-neutral-900 via-zinc-950 to-neutral-950">
+                    <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  </div>
+                  <div class="relative rounded-lg overflow-hidden border border-amber-950/30 bg-gradient-to-br from-neutral-900 via-zinc-950 to-neutral-950">
+                    <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  </div>
+                  <div class="relative rounded-lg overflow-hidden border border-amber-950/30 bg-gradient-to-br from-neutral-900 via-zinc-950 to-neutral-950">
+                    <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  </div>
+                  <div class="relative rounded-lg overflow-hidden border border-amber-950/30 bg-gradient-to-br from-neutral-900 via-zinc-950 to-neutral-950">
+                    <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  </div>
+                  <div class="relative rounded-lg overflow-hidden border border-amber-950/30 bg-gradient-to-br from-neutral-900 via-zinc-950 to-neutral-950">
+                    <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  </div>
+                  <div class="relative rounded-lg overflow-hidden border border-amber-950/30 bg-gradient-to-br from-neutral-900 via-zinc-950 to-neutral-950">
+                    <div class="absolute inset-0 bg-[linear-gradient(90deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:8px_100%]"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(255,255,255,0.02)_50%,transparent_52%)] bg-[size:100%_8px]"></div>
+                  </div>
+                </div>
+
+                <div class="absolute inset-0 bg-amber-950/40 backdrop-brightness-[0.6] flex flex-col justify-between p-4 pointer-events-none rounded-2xl overflow-hidden">
+                  <div class="absolute top-[10%] left-[25%] w-24 h-16 rounded-full bg-yellow-950/60 blur-md animate-float-dust"></div>
+                  <div class="absolute top-[40%] right-[10%] w-32 h-20 rounded-full bg-neutral-950/80 blur-lg"></div>
+                  <div class="absolute bottom-[20%] left-[30%] w-40 h-16 rounded-full bg-yellow-950/50 blur-xl animate-float-dust" style="animation-delay: 2s;"></div>
+                  <div class="absolute top-[50%] left-[5%] w-16 h-12 rounded-full bg-zinc-900/70 blur-md"></div>
+                  <div class="absolute top-[25%] right-[35%] w-6 h-6 rounded-full bg-white/20 blur-[2px]"></div>
+                  <div class="absolute bottom-[35%] left-[15%] w-8 h-4 rounded-full bg-white/10 blur-[1px]"></div>
+                </div>
+              </div>
+
+              <div class="absolute top-6 left-6 z-20 space-y-2 flex flex-col items-start">
+                <span class="px-3 py-1.5 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-400 text-[10px] font-extrabold uppercase tracking-widest backdrop-blur-md flex items-center gap-1.5">
+                  ⚠ TOTAL LOSS: -34.2%
+                </span>
+              </div>
+            </div>
+
+            <!-- Tank Before -->
+            <div id="before-tank" class="w-full h-full bg-gradient-to-br from-zinc-950 via-neutral-900 to-amber-950/10 flex items-center justify-center relative hidden">
+              <div class="absolute inset-0 bg-black/50 z-[2]"></div>
+              
+              <div class="w-[70%] h-[75%] border border-neutral-800 rounded-t-[100px] rounded-b-3xl bg-neutral-950/60 relative overflow-hidden flex flex-col justify-end p-2 shadow-inner z-[3]">
+                <div class="w-full h-[85%] rounded-b-2xl bg-gradient-to-t from-yellow-950/60 via-amber-900/30 to-amber-950/20 border-t border-yellow-950/50 relative overflow-hidden">
+                  <div class="absolute bottom-0 inset-x-0 h-12 bg-neutral-950/90 blur-[3px]"></div>
+                  <div class="absolute bottom-2 left-[20%] w-[35%] h-8 bg-amber-950/90 rounded-full blur-[4px]"></div>
+                  <div class="absolute bottom-1 right-[15%] w-[45%] h-10 bg-yellow-950/80 rounded-full blur-[5px]"></div>
+                  <div class="absolute top-1/4 left-[30%] w-3 h-3 rounded-full bg-emerald-950/50 border border-emerald-900/30 animate-float-dust"></div>
+                  <div class="absolute top-1/2 right-[25%] w-4 h-4 rounded-full bg-yellow-900/30 border border-yellow-800/20 animate-float-dust" style="animation-delay: 2s;"></div>
+                </div>
+              </div>
+
+              <div class="absolute top-6 left-6 z-20 space-y-2 flex flex-col items-start">
+                <span class="px-3 py-1.5 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-400 text-[10px] font-extrabold uppercase tracking-widest backdrop-blur-md">
+                  ⚠ SANITIZATION CRITICAL
+                </span>
+              </div>
+            </div>
+
+            <!-- Car Before -->
+            <div id="before-car" class="w-full h-full bg-gradient-to-tr from-zinc-950 via-neutral-900 to-amber-950/15 flex items-center justify-center relative hidden">
+              <div class="absolute inset-0 bg-black/40 z-[2]"></div>
+              
+              <div class="w-[80%] h-[70%] bg-gradient-to-r from-neutral-800 via-neutral-900 to-amber-950/20 border border-neutral-800 rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between shadow-lg z-[3]">
+                <div class="relative z-10 opacity-40">
+                  <div class="flex items-center gap-2 text-amber-500">
+                    <span>⚠</span>
+                    <span class="text-xs uppercase tracking-widest font-bold">Corroded Surface Layer</span>
+                  </div>
+                </div>
+
+                <div class="absolute inset-0 bg-amber-950/20 pointer-events-none rounded-3xl">
+                  <div class="absolute top-[20%] left-[15%] w-32 h-16 rounded-full bg-amber-900/30 blur-md"></div>
+                  <div class="absolute bottom-[10%] right-[20%] w-44 h-24 rounded-full bg-neutral-950/80 blur-xl"></div>
+                  <div class="absolute top-1/2 left-[40%] w-12 h-12 bg-amber-950/60 rounded-full blur-[2px]"></div>
+                  <div class="absolute top-[30%] right-[30%] w-8 h-8 bg-yellow-950/40 rounded-full blur-[1px]"></div>
+                </div>
+
+                <div class="relative z-10 self-end text-right opacity-50">
+                  <span class="text-[10px] text-rose-400 block">Acid Rain & Grime Coating</span>
+                  <span class="text-xs font-semibold text-neutral-400 font-display">Paint Layer Exposed</span>
+                </div>
+              </div>
+
+              <div class="absolute top-6 left-6 z-20 space-y-2 flex flex-col items-start">
+                <span class="px-3 py-1.5 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-400 text-[10px] font-extrabold uppercase tracking-widest backdrop-blur-md">
+                  ⚠ PAINT CORROSION RISK
+                </span>
+              </div>
+            </div>
+
+            <span class="absolute bottom-4 left-4 z-20 px-3 py-1.5 rounded-lg bg-neutral-900/85 border border-neutral-700 text-[10px] font-extrabold uppercase tracking-widest text-neutral-400 backdrop-blur-md">
+              UNTOUCHED BEFORE
+            </span>
+          </div>
+        </div>
+
+        <!-- SLIDER LINE & HANDLE -->
+        <div 
+          id="slider-handle"
+          class="absolute inset-y-0 z-30 w-1 bg-gradient-to-b from-khuvo-blue via-khuvo-cyan to-khuvo-blue pointer-events-none"
+          style="left: 50%;"
+        >
+          <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-khuvo-navy border-2 border-khuvo-cyan flex items-center justify-center cursor-ew-resize" style="box-shadow: 0 0 20px #06b6d4;">
+            <span class="flex gap-0.5 text-khuvo-cyan text-[10px]">||</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== BENEFITS & ROI CALCULATOR DASHBOARD ==================== -->
+      <div class="mt-16 pt-16 border-t border-white/5 space-y-12">
+        <!-- Header -->
+        <div class="text-center max-w-3xl mx-auto space-y-4">
+          <span class="px-3 py-1 text-[10px] font-bold tracking-wider text-khuvo-cyan bg-khuvo-cyan/15 rounded-full inline-flex items-center gap-1.5 uppercase font-display border border-khuvo-cyan/20">
+            ★ Environmental & Financial Science
+          </span>
+          <h3 class="text-2xl sm:text-3xl font-black font-display tracking-tight text-white">
+            Why Routine Solar Cleaning is Non-Negotiable
+          </h3>
+          <p class="text-sm text-khuvo-slate font-light">
+            Dirty panels do more than just drop generation. They damage equipment, invalidate warranties, and leak capital.
+          </p>
+        </div>
+
+        <!-- Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          <!-- Left Column: Scientific Benefits List -->
+          <div class="lg:col-span-7 space-y-4 flex flex-col justify-between">
+            
+            <!-- Benefit 1 -->
+            <div
+              id="benefit-card-efficiency"
+              onclick="selectBenefit('efficiency')"
+              class="p-5 rounded-2xl border text-left cursor-pointer transition-all duration-300 flex items-start gap-4 bg-khuvo-cyan/5 border-khuvo-cyan/40 shadow-glow"
+            >
+              <div class="p-3 rounded-xl border shrink-0 bg-khuvo-cyan/10 border-khuvo-cyan/30 text-khuvo-cyan" id="benefit-icon-efficiency">
+                ☀️
+              </div>
+              <div class="space-y-1.5">
+                <h4 class="text-sm font-bold font-display text-khuvo-cyan" id="benefit-title-efficiency">
+                  Peak Energy Capture (+34.2% Boost)
+                </h4>
+                <p class="text-xs leading-relaxed font-light text-white/80" id="benefit-desc-efficiency">
+                  Atmospheric soot, pollen, mud layers, and bird droppings form a physical solar filter. Khuvo pH-neutral washing clears this opaque sheet completely, allowing full solar irradiance penetration straight to the active silicon cell layer.
+                </p>
+              </div>
+            </div>
+
+            <!-- Benefit 2 -->
+            <div
+              id="benefit-card-hotspot"
+              onclick="selectBenefit('hotspot')"
+              class="p-5 rounded-2xl border text-left cursor-pointer transition-all duration-300 flex items-start gap-4 bg-white/[0.02] border-white/5 hover:bg-white/[0.04]"
+            >
+              <div class="p-3 rounded-xl border shrink-0 bg-white/5 border-white/10 text-khuvo-slate" id="benefit-icon-hotspot">
+                🔥
+              </div>
+              <div class="space-y-1.5">
+                <h4 class="text-sm font-bold font-display text-white" id="benefit-title-hotspot">
+                  Hotspot & Cell Failure Mitigation
+                </h4>
+                <p class="text-xs leading-relaxed font-light text-khuvo-slate line-clamp-2" id="benefit-desc-hotspot">
+                  Soiling is never perfectly uniform. Shaded cells in a circuit act as resistors rather than power producers, dissipating electricity as intensive heat. This creates thermal 'hotspots' that can crack front glass, burn backsheets, or trigger roof fires.
+                </p>
+              </div>
+            </div>
+
+            <!-- Benefit 3 -->
+            <div
+              id="benefit-card-coating"
+              onclick="selectBenefit('coating')"
+              class="p-5 rounded-2xl border text-left cursor-pointer transition-all duration-300 flex items-start gap-4 bg-white/[0.02] border-white/5 hover:bg-white/[0.04]"
+            >
+              <div class="p-3 rounded-xl border shrink-0 bg-white/5 border-white/10 text-khuvo-slate" id="benefit-icon-coating">
+                🛡️
+              </div>
+              <div class="space-y-1.5">
+                <h4 class="text-sm font-bold font-display text-white" id="benefit-title-coating">
+                  AR Glass Coating Preservation
+                </h4>
+                <p class="text-xs leading-relaxed font-light text-khuvo-slate line-clamp-2" id="benefit-desc-coating">
+                  Raw rainwater isn't clean; it mixes with soot to form acidic film. Leaving this crusted layer permanently etches the anti-reflective coating. Our scratch-safe specialized microfiber sweeps protect this layer completely.
+                </p>
+              </div>
+            </div>
+
+            <!-- Benefit 4 -->
+            <div
+              id="benefit-card-warranty"
+              onclick="selectBenefit('warranty')"
+              class="p-5 rounded-2xl border text-left cursor-pointer transition-all duration-300 flex items-start gap-4 bg-white/[0.02] border-white/5 hover:bg-white/[0.04]"
+            >
+              <div class="p-3 rounded-xl border shrink-0 bg-white/5 border-white/10 text-khuvo-slate" id="benefit-icon-warranty">
+                🏆
+              </div>
+              <div class="space-y-1.5">
+                <h4 class="text-sm font-bold font-display text-white" id="benefit-title-warranty">
+                  Manufacturer Warranty Protection
+                </h4>
+                <p class="text-xs leading-relaxed font-light text-khuvo-slate line-clamp-2" id="benefit-desc-warranty">
+                  Top solar tier warranties (Tata, Waaree, Adani, etc.) explicitly mandate routine professional cleaning to keep performance warranties active. Unclean installations risk immediate voiding of performance drop claims.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Interactive ROI Calculator -->
+          <div class="lg:col-span-5 p-6 md:p-8 rounded-3xl bg-gradient-to-tr from-khuvo-blue to-sky-950 border border-white/10 shadow-blueGlow flex flex-col justify-between relative overflow-hidden text-left">
+            <div class="absolute top-0 right-0 w-32 h-32 rounded-full glow-orb-cyan blur-2xl opacity-20 pointer-events-none"></div>
+
+            <div class="space-y-6">
+              <span class="px-2.5 py-1 text-[9px] font-bold tracking-wider text-khuvo-cyan bg-khuvo-cyan/15 border border-khuvo-cyan/30 rounded-full inline-flex items-center gap-1 uppercase font-display">
+                🪙 Live Returns Engine
+              </span>
+              
+              <h4 class="text-xl font-bold font-display text-white">
+                Khuvo Energy Gains Calculator
+              </h4>
+              
+              <p class="text-xs text-khuvo-slate font-light leading-relaxed">
+                Enter your rooftop installation specifics to view the immediate monthly savings and carbon footprint reductions recovered.
+              </p>
+
+              <!-- Slider 1: System Capacity -->
+              <div class="space-y-2 pt-4">
+                <div class="flex justify-between text-xs font-semibold uppercase tracking-wider text-khuvo-slate">
+                  <span>1. Array Capacity</span>
+                  <span id="roi-cap-label" class="text-white font-bold">10 kW</span>
+                </div>
+                <input
+                  type="range"
+                  min="3"
+                  max="50"
+                  step="1"
+                  value="10"
+                  id="roi-input-capacity"
+                  oninput="updateRoiCalculation()"
+                  class="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-khuvo-cyan"
+                />
+                <div class="flex justify-between text-[10px] text-khuvo-slate">
+                  <span>Residential (3kW)</span>
+                  <span>Commercial (50kW)</span>
+                </div>
+              </div>
+
+              <!-- Slider 2: Average Monthly Bill -->
+              <div class="space-y-2 pt-2">
+                <div class="flex justify-between text-xs font-semibold uppercase tracking-wider text-khuvo-slate">
+                  <span>2. Monthly Energy Bill</span>
+                  <span id="roi-bill-label" class="text-white font-bold">₹5,000</span>
+                </div>
+                <input
+                  type="range"
+                  min="1500"
+                  max="30000"
+                  step="500"
+                  value="5000"
+                  id="roi-input-bill"
+                  oninput="updateRoiCalculation()"
+                  class="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-khuvo-cyan"
+                />
+                <div class="flex justify-between text-[10px] text-khuvo-slate">
+                  <span>Min: ₹1,500</span>
+                  <span>Max: ₹30,000+</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Outputs -->
+            <div class="py-6 my-6 border-y border-white/10 space-y-4">
+              <div class="flex items-center justify-between text-left">
+                <div>
+                  <span class="text-[10px] text-rose-400 font-extrabold uppercase tracking-widest block">Dirty Loss Sheet</span>
+                  <span class="text-xs font-light text-khuvo-slate">34.2% solar rays blocked</span>
+                </div>
+                <span id="roi-loss-display" class="text-lg font-bold text-rose-400 font-display">₹1,710 /mo lost</span>
+              </div>
+
+              <div class="flex items-center justify-between text-left">
+                <div>
+                  <span class="text-[10px] text-khuvo-cyan font-extrabold uppercase tracking-widest block">Annual Capital Restored</span>
+                  <span class="text-xs font-light text-khuvo-slate">Recovered solar power credits</span>
+                </div>
+                <span id="roi-annual-display" class="text-2xl font-black text-white font-display">₹20,520</span>
+              </div>
+
+              <div class="flex items-center justify-between text-left">
+                <div>
+                  <span class="text-[10px] text-emerald-400 font-extrabold uppercase tracking-widest block">10-Yr Yield Return</span>
+                  <span class="text-xs font-light text-khuvo-slate">System lifetime longevity gains</span>
+                </div>
+                <span id="roi-lifetime-display" class="text-lg font-bold text-emerald-400 font-display">₹205,200</span>
+              </div>
+
+              <div class="flex items-center justify-between text-left pt-2">
+                <div>
+                  <span class="text-[10px] text-cyan-300 font-extrabold uppercase tracking-widest block">Annual Carbon Offset</span>
+                  <span class="text-xs font-light text-khuvo-slate">Grid equivalent offset</span>
+                </div>
+                <span id="roi-co2-display" class="text-xs font-bold text-cyan-300 font-display">4,244 kg CO₂</span>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl text-emerald-400 text-xs font-bold text-left flex items-start gap-2.5">
+                <span>🪙 Khuvo Smart Clean pays for itself within just 45 days of generation recovery!</span>
+              </div>
+
+              <a
+                href="#calculator"
+                class="w-full py-4 bg-white text-khuvo-navy font-bold uppercase tracking-wider text-xs rounded-xl hover:bg-khuvo-cyan hover:scale-[1.02] transition-all flex items-center justify-center gap-1.5"
+              >
+                Estimate Service Clean Quote ➜
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== INTERACTIVE PRICING CALCULATOR ==================== -->
+  <section id="calculator" class="py-20 bg-khuvo-navyLight relative">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-khuvo-cyan block font-display">
+          ★ Transparent Quotation Engine
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black font-display text-white">
+          Khuvo Smart Pricing Engine
+        </h2>
+        <p class="text-sm text-khuvo-slate font-light font-sans">
+          Parametrically adjust your project requirements to calculate quotes instantly.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <!-- Controls Column -->
+        <div class="lg:col-span-7 p-6 md:p-8 rounded-2xl glass-panel flex flex-col justify-between space-y-6 text-left">
+          
+          <!-- Category Tabs -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-khuvo-slate mb-3">1. Select Service Category</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <button onclick="setCalcCategory('solar')" id="btn-cat-solar" class="p-3 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all flex flex-col items-center gap-2 bg-khuvo-blue/15 border-khuvo-blue text-khuvo-cyan shadow-glow">
+                ☉ Solar Panels
+              </button>
+              <button onclick="setCalcCategory('tank')" id="btn-cat-tank" class="p-3 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all flex flex-col items-center gap-2 bg-white/5 border-white/10 text-khuvo-slate hover:text-white">
+                💧 Water Tank
+              </button>
+              <button onclick="setCalcCategory('car')" id="btn-cat-car" class="p-3 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all flex flex-col items-center gap-2 bg-white/5 border-white/10 text-khuvo-slate hover:text-white">
+                🚗 Car Wash
+              </button>
+              <button onclick="setCalcCategory('bike')" id="btn-cat-bike" class="p-3 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all flex flex-col items-center gap-2 bg-white/5 border-white/10 text-khuvo-slate hover:text-white">
+                🏍 Bike Wash
+              </button>
+            </div>
+          </div>
+
+          <!-- Parametric Fields -->
+          <div class="py-4 border-y border-white/5 space-y-6">
+            
+            <!-- Solar controls -->
+            <div id="calc-control-solar" class="space-y-4">
+              <div class="flex justify-between items-center text-xs">
+                <span class="font-semibold uppercase tracking-wider text-khuvo-slate">2. Adjust Solar Panel Count</span>
+                <span id="label-solar-panels" class="px-3 py-1 bg-khuvo-cyan/15 text-khuvo-cyan rounded-full font-bold">15 Panels</span>
+              </div>
+              <input type="range" min="5" max="100" step="5" value="15" id="input-solar-panels" oninput="updatePriceEstimate()" class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-khuvo-cyan">
+              <div class="flex justify-between text-[10px] text-khuvo-slate">
+                <span>Min: 5 Panels</span>
+                <span>Max: 100+ Panels</span>
+              </div>
+            </div>
+
+            <!-- Tank controls -->
+            <div id="calc-control-tank" class="space-y-4 hidden">
+              <span class="block text-xs font-semibold uppercase tracking-wider text-khuvo-slate">2. Select Water Tank Volume</span>
+              <div class="grid grid-cols-4 gap-2">
+                <button onclick="setTankLiters(500)" id="btn-tank-500" class="p-3 rounded-xl border text-xs font-bold bg-white/5 border-white/10 text-khuvo-slate hover:text-white">500L</button>
+                <button onclick="setTankLiters(1000)" id="btn-tank-1000" class="p-3 rounded-xl border text-xs font-bold bg-khuvo-cyan/15 border-khuvo-cyan text-white">1000L</button>
+                <button onclick="setTankLiters(2000)" id="btn-tank-2000" class="p-3 rounded-xl border text-xs font-bold bg-white/5 border-white/10 text-khuvo-slate hover:text-white">2000L</button>
+                <button onclick="setTankLiters(5000)" id="btn-tank-5000" class="p-3 rounded-xl border text-xs font-bold bg-white/5 border-white/10 text-khuvo-slate hover:text-white">5000L</button>
+              </div>
+            </div>
+
+            <!-- Car controls -->
+            <div id="calc-control-car" class="space-y-4 hidden">
+              <span class="block text-xs font-semibold uppercase tracking-wider text-khuvo-slate">2. Select Car Segment</span>
+              <div class="grid grid-cols-3 gap-2">
+                <button onclick="setCarType('hatchback')" id="btn-car-hatchback" class="p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-white/5 border-white/10 text-khuvo-slate">Hatchback</button>
+                <button onclick="setCarType('sedan')" id="btn-car-sedan" class="p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-khuvo-cyan/15 border-khuvo-cyan text-white">Sedan</button>
+                <button onclick="setCarType('suv')" id="btn-car-suv" class="p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-white/5 border-white/10 text-khuvo-slate">SUV / Lux</button>
+              </div>
+            </div>
+
+            <!-- Bike controls -->
+            <div id="calc-control-bike" class="space-y-4 hidden">
+              <span class="block text-xs font-semibold uppercase tracking-wider text-khuvo-slate">2. Select Bike Category</span>
+              <div class="grid grid-cols-2 gap-2">
+                <button onclick="setBikeType('standard')" id="btn-bike-standard" class="p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-white/5 border-white/10 text-khuvo-slate">Standard / Scooter</button>
+                <button onclick="setBikeType('sports')" id="btn-bike-sports" class="p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-khuvo-cyan/15 border-khuvo-cyan text-white">Premium / Cruiser</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Frequency Controls -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-khuvo-slate mb-3">3. Choose Maintenance Cycle</label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button onclick="setFrequency('onetime')" id="btn-freq-onetime" class="p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-khuvo-cyan/15 border-khuvo-cyan text-white flex justify-between items-center">
+                <span>One-Time Clean</span>
+                <span class="text-[9px] font-bold text-khuvo-cyan bg-khuvo-cyan/10 px-1.5 py-0.5 rounded-full">0% Off</span>
+              </button>
+              <button onclick="setFrequency('quarterly')" id="btn-freq-quarterly" class="p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-white/5 border-white/10 text-khuvo-slate hover:text-white flex justify-between items-center">
+                <span>Quarterly AMC</span>
+                <span class="text-[9px] font-bold text-khuvo-cyan bg-khuvo-cyan/10 px-1.5 py-0.5 rounded-full">10% Off</span>
+              </button>
+              <button onclick="setFrequency('monthly')" id="btn-freq-monthly" class="p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-white/5 border-white/10 text-khuvo-slate hover:text-white flex justify-between items-center">
+                <span>Monthly AMC</span>
+                <span class="text-[9px] font-bold text-khuvo-cyan bg-khuvo-cyan/10 px-1.5 py-0.5 rounded-full">20% Off</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Result Card Column -->
+        <div class="lg:col-span-5 p-6 md:p-8 rounded-2xl bg-gradient-to-tr from-khuvo-blue to-sky-950 border border-white/10 shadow-blueGlow flex flex-col justify-between text-center relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 rounded-full glow-orb-cyan blur-2xl opacity-30 pointer-events-none"></div>
+          
+          <div class="space-y-4">
+            <span class="px-2.5 py-1 text-[9px] font-bold tracking-wider text-khuvo-cyan bg-khuvo-cyan/10 border border-khuvo-cyan/30 rounded-full inline-flex items-center gap-1 uppercase">
+              ⚡ LIVE ESTIMATOR
+            </span>
+            <h3 class="text-xl font-bold tracking-tight text-white font-display">Estimated Clean Cost</h3>
+            <div class="py-6">
+              <span id="calc-price-display" class="text-4xl md:text-5xl font-black text-white font-display block">₹1,099</span>
+              <span class="text-[10px] text-khuvo-slate block mt-1 uppercase font-semibold">Surfactants & detailing included</span>
+            </div>
+            
+            <div id="savings-badge-container" class="hidden">
+              <div id="savings-badge" class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold inline-block">
+                Subscription Saved: ₹0
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-4 mt-8 lg:mt-0">
+            <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-left text-xs text-khuvo-slate space-y-2">
+              <div class="flex justify-between">
+                <span>Safe Formula:</span>
+                <span class="text-white font-medium">PH-Neutral organic pH 7</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Tools Used:</span>
+                <span class="text-white font-medium">Demineralized Rinse + Soft brush</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Operator:</span>
+                <span class="text-white font-medium">Certified Operations Pro</span>
+              </div>
+            </div>
+
+            <button onclick="triggerCheckout()" class="w-full py-4 bg-white text-khuvo-navy font-bold uppercase tracking-wider text-xs rounded-xl hover:bg-khuvo-cyan hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5">
+              Proceed to Dispatch checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SUBSCRIPTIONS ==================== -->
+  <section id="subscriptions" class="py-20 bg-khuvo-navy">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-khuvo-cyan block font-display">
+          ★ Subscription plans
+        </span>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-display text-white">
+          Automate Your Property Upkeep
+        </h2>
+        <p class="text-sm text-khuvo-slate font-light">Set and forget. Elite recurring care slabs with yearly savings.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto text-left">
+        <!-- Plan 1 -->
+        <div class="relative rounded-2xl glass-panel p-6 md:p-8 flex flex-col justify-between hover:border-white/20 transition-all duration-300">
+          <div>
+            <h3 class="text-xl font-bold text-white mb-2 font-display">Basic Shield</h3>
+            <p class="text-xs text-khuvo-slate mb-6 font-light leading-relaxed">Periodic washes for vehicle owners and small households.</p>
+            <div class="mb-6 flex items-baseline gap-1">
+              <span class="text-3xl font-black text-white font-display">₹499</span>
+              <span class="text-xs text-khuvo-slate font-medium">/month</span>
+            </div>
+            <ul class="space-y-3 mb-8 pt-6 border-t border-white/5 text-xs text-khuvo-slate">
+              <li>✓ 1 Doorstep Car/Bike Wash / month</li>
+              <li>✓ Quarterly Water Tank structural review</li>
+              <li>✓ Safe organic surfactants formula</li>
+              <li>✓ Next-day dispatch priority booking</li>
+            </ul>
+          </div>
+          <button onclick="openBookingModal('solar')" class="w-full py-4 rounded-xl text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-white hover:bg-white/10">
+            Choose Basic Plan
+          </button>
+        </div>
+
+        <!-- Plan 2 (Popular) -->
+        <div class="relative rounded-2xl glass-panel p-6 md:p-8 flex flex-col justify-between border-khuvo-cyan/40 shadow-blueGlow lg:scale-105 z-10 bg-gradient-to-b from-khuvo-navyLight to-khuvo-navy">
+          <span class="absolute top-4 right-4 px-2.5 py-1 text-[9px] font-bold tracking-wider text-khuvo-cyan bg-khuvo-cyan/15 rounded-full uppercase font-display border border-khuvo-cyan/30">
+            ★ MOST POPULAR
+          </span>
+          <div>
+            <h3 class="text-xl font-bold text-white mb-2 font-display">Smart Care</h3>
+            <p class="text-xs text-khuvo-slate mb-6 font-light leading-relaxed">Complete solar and home water tank shield detailing.</p>
+            <div class="mb-6 flex items-baseline gap-1">
+              <span class="text-3xl font-black text-white font-display">₹1,499</span>
+              <span class="text-xs text-khuvo-slate font-medium">/month</span>
+            </div>
+            <ul class="space-y-3 mb-8 pt-6 border-t border-white/5 text-xs text-khuvo-slate">
+              <li>✓ 1 Solar Panel Clean / month (up to 15 panels)</li>
+              <li>✓ 2 Doorstep Vehicle Detailed washes</li>
+              <li>✓ Bi-annual Water Tank vacuum sanitation</li>
+              <li>✓ Same-day booking dispatcher priority</li>
+              <li>✓ Photo-proof audit reports uploaded</li>
+            </ul>
+          </div>
+          <button onclick="openBookingModal('solar')" class="w-full py-4 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-khuvo-blue to-khuvo-cyan text-white shadow-glow">
+            Activate Smart Care
+          </button>
+        </div>
+
+        <!-- Plan 3 -->
+        <div class="relative rounded-2xl glass-panel p-6 md:p-8 flex flex-col justify-between hover:border-white/20 transition-all duration-300">
+          <div>
+            <h3 class="text-xl font-bold text-white mb-2 font-display">Elite Estate</h3>
+            <p class="text-xs text-khuvo-slate mb-6 font-light leading-relaxed">VIP maintenance management for luxury villas and MW grids.</p>
+            <div class="mb-6 flex items-baseline gap-1">
+              <span class="text-3xl font-black text-white font-display">₹2,999</span>
+              <span class="text-xs text-khuvo-slate font-medium">/month</span>
+            </div>
+            <ul class="space-y-3 mb-8 pt-6 border-t border-white/5 text-xs text-khuvo-slate">
+              <li>✓ Bi-weekly Solar Panel Detailed Clean</li>
+              <li>✓ 4 Doorstep premium washes & chain lubes</li>
+              <li>✓ Unlimited tank leakage safety sweeps</li>
+              <li>✓ VIP same-day immediate dispatch priority</li>
+            </ul>
+          </div>
+          <button onclick="openBookingModal('solar')" class="w-full py-4 rounded-xl text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-white hover:bg-white/10">
+            Acquire Premium Shield
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ACCORDION ==================== -->
+  <section id="faq" class="py-20 bg-khuvo-navyLight">
+    <div class="max-w-4xl mx-auto px-6 text-left">
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-khuvo-cyan block font-display">
+          ★ FAQ DIRECTORY
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black font-display text-white">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-sm text-khuvo-slate font-light">The science, scheduling, and billing behind Khuvo operations.</p>
+      </div>
+
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <div class="rounded-2xl border bg-white/3 border-white/5 transition-all duration-300" id="faq-0">
+          <button onclick="toggleFaq(0)" class="w-full p-6 text-left flex justify-between items-center gap-4">
+            <span class="flex gap-3 items-start text-sm sm:text-base font-bold text-white font-display">
+              <span class="text-khuvo-cyan">☉</span>
+              <span>Does water pressure washing damage solar panel coatings?</span>
+            </span>
+            <span id="faq-icon-0" class="p-2 rounded-lg bg-white/5 text-khuvo-slate font-bold">+</span>
+          </button>
+          <div id="faq-content-0" class="px-6 pb-6 pl-14 text-xs sm:text-sm text-khuvo-slate leading-relaxed font-light hidden">
+            Absolutely not. We never use hard abrasives or metal scrubbers. Khuvo uses specialized demineralized soft water and zero-scratch microfiber brush heads specifically engineered to preserve the solar anti-reflective (AR) coating.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="rounded-2xl border bg-white/3 border-white/5 transition-all duration-300" id="faq-1">
+          <button onclick="toggleFaq(1)" class="w-full p-6 text-left flex justify-between items-center gap-4">
+            <span class="flex gap-3 items-start text-sm sm:text-base font-bold text-white font-display">
+              <span class="text-khuvo-cyan">☉</span>
+              <span>How often should water tanks be vacuumed and cleaned?</span>
+            </span>
+            <span id="faq-icon-1" class="p-2 rounded-lg bg-white/5 text-khuvo-slate font-bold">+</span>
+          </button>
+          <div id="faq-content-1" class="px-6 pb-6 pl-14 text-xs sm:text-sm text-khuvo-slate leading-relaxed font-light hidden">
+            According to WHO sanitization guidelines, residential drinking water tanks must be detailed and sterilized every six months. This prevents toxic sediment sheets, iron rust scale, and pathogenic bacterial breeding.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="rounded-2xl border bg-white/3 border-white/5 transition-all duration-300" id="faq-2">
+          <button onclick="toggleFaq(2)" class="w-full p-6 text-left flex justify-between items-center gap-4">
+            <span class="flex gap-3 items-start text-sm sm:text-base font-bold text-white font-display">
+              <span class="text-khuvo-cyan">☉</span>
+              <span>Are the chemicals used safe for crops, pets, and children?</span>
+            </span>
+            <span id="faq-icon-2" class="p-2 rounded-lg bg-white/5 text-khuvo-slate font-bold">+</span>
+          </button>
+          <div id="faq-content-2" class="px-6 pb-6 pl-14 text-xs sm:text-sm text-khuvo-slate leading-relaxed font-light hidden">
+            Yes. Khuvo uses only eco-safe, pH 7 neutral, completely biodegradable organic cleaning compounds. Our solution contains zero heavy caustic soda or acid bases, ensuring that lawns, pets, and children remain completely secure.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== EXPANSIVE FUTURISTIC FOOTER ==================== -->
+  <footer class="bg-khuvo-navy text-khuvo-slate border-t border-white/5 py-16">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-12 text-left">
+      <div class="md:col-span-4 space-y-6">
+        <div class="flex items-center gap-2">
+          <div class="w-9 h-9 bg-gradient-to-r from-khuvo-blue to-khuvo-cyan rounded-xl flex items-center justify-center font-display font-extrabold text-lg text-white">
+            K
+          </div>
+          <span class="font-display font-black text-xl text-white uppercase">KHUVO<span class="text-khuvo-cyan">.</span></span>
+        </div>
+        <p class="text-xs font-light leading-relaxed">Tech-enabled property maintenance for modern India. Stationed locally across Kanpur, Lucknow, and Unnao for certified under-4-hour SLA technician dispatch.</p>
+      </div>
+
+      <div class="md:col-span-4 space-y-4">
+        <h4 class="text-xs font-bold text-white uppercase font-display tracking-wider">Contact & Dispatch lines</h4>
+        <ul class="space-y-2 text-xs font-medium">
+          <li>📞 +91 99999 99999 (Booking desk)</li>
+          <li>✉ support@khuvo.in (Enterprise AMC desk)</li>
+          <li>📍 Kanpur Central Hub | Lucknow Hub | Unnao Zone</li>
+        </ul>
+      </div>
+
+      <div class="md:col-span-4 space-y-4">
+        <h4 class="text-xs font-bold text-white uppercase font-display tracking-wider">Sitemap Directories</h4>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-2.5 py-1 bg-white/5 rounded-lg text-[10px]">solar panel cleaning near me</span>
+          <span class="px-2.5 py-1 bg-white/5 rounded-lg text-[10px]">water tank cleaning</span>
+          <span class="px-2.5 py-1 bg-white/5 rounded-lg text-[10px]">doorstep car wash</span>
+          <span class="px-2.5 py-1 bg-white/5 rounded-lg text-[10px]">bike wash service</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== BOOKING MODAL ==================== -->
+  <div 
+    id="booking-modal" 
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-khuvo-navy/85 backdrop-blur-md hidden transition-opacity duration-300"
+  >
+    <div class="relative w-full max-w-lg p-6 md:p-8 rounded-2xl glass-panel shadow-blueGlow border border-white/10 overflow-hidden transform text-left">
+      <button onclick="closeBookingModal()" class="absolute top-4 right-4 p-2 text-khuvo-slate hover:text-white rounded-full hover:bg-white/5">
+        ✕
+      </button>
+
+      <div id="booking-form-view">
+        <span class="px-2.5 py-1 text-[9px] font-bold tracking-wider text-khuvo-cyan bg-khuvo-cyan/10 rounded-full inline-block uppercase font-display mb-2">
+          ⚡ 30-Sec Technician Booking
+        </span>
+        <h3 class="text-2xl font-bold tracking-tight text-white font-display mb-1">Schedule Your Smart Clean</h3>
+        <p class="text-xs text-khuvo-slate mb-6">Dispatching certified experts with real-time photographic audits.</p>
+
+        <form onsubmit="handleBookingSubmit(event)" class="space-y-4">
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-khuvo-slate mb-1">Your Full Name *</label>
+            <input type="text" id="form-name" required placeholder="e.g. Rajan Sharma" class="w-full px-4 py-3 text-sm text-white bg-white/5 border border-white/10 rounded-xl focus:border-khuvo-cyan focus:outline-none">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-khuvo-slate mb-1">Phone Number *</label>
+              <input type="tel" id="form-phone" required pattern="[0-9]{10}" placeholder="10-digit number" class="w-full px-4 py-3 text-sm text-white bg-white/5 border border-white/10 rounded-xl focus:border-khuvo-cyan focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-khuvo-slate mb-1">Select Hub *</label>
+              <select id="form-city" class="w-full px-4 py-3 text-sm text-white bg-white/5 border border-white/10 rounded-xl focus:border-khuvo-cyan focus:outline-none">
+                <option value="Kanpur" class="bg-khuvo-navy text-white">Kanpur</option>
+                <option value="Lucknow" class="bg-khuvo-navy text-white">Lucknow</option>
+                <option value="Unnao" class="bg-khuvo-navy text-white">Unnao</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-khuvo-slate mb-1">Active Service Category *</label>
+            <select id="form-service" onchange="adjustModalPrice()" class="w-full px-4 py-3 text-sm text-white bg-white/5 border border-white/10 rounded-xl focus:border-khuvo-cyan focus:outline-none">
+              <option value="solar" class="bg-khuvo-navy text-white">Solar Panel Cleaning</option>
+              <option value="tank" class="bg-khuvo-navy text-white">Water Tank Sanitizing</option>
+              <option value="car" class="bg-khuvo-navy text-white">Doorstep Car Wash</option>
+              <option value="bike" class="bg-khuvo-navy text-white">Doorstep Bike Wash</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-khuvo-slate mb-1">Date *</label>
+              <input type="date" id="form-date" required class="w-full px-4 py-3 text-sm text-white bg-white/5 border border-white/10 rounded-xl focus:border-khuvo-cyan focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-khuvo-slate mb-1">Preferred Slot</label>
+              <select id="form-slot" class="w-full px-4 py-3 text-sm text-white bg-white/5 border border-white/10 rounded-xl focus:border-khuvo-cyan focus:outline-none">
+                <option value="Morning (9 AM - 12 PM)" class="bg-khuvo-navy text-white">Morning (9 AM - 12 PM)</option>
+                <option value="Evening (3 PM - 6 PM)" class="bg-khuvo-navy text-white">Evening (3 PM - 6 PM)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Modal Price Display -->
+          <div class="p-4 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between text-xs">
+            <div>
+              <span class="block text-khuvo-slate font-bold uppercase tracking-wider">Estimated Cost</span>
+              <span class="text-[10px] text-khuvo-cyan">Surfactants and reports included</span>
+            </div>
+            <span id="modal-price-display" class="text-2xl font-black text-white font-display">₹999</span>
+          </div>
+
+          <button type="submit" class="w-full py-4 bg-gradient-to-r from-khuvo-blue to-khuvo-cyan rounded-xl text-white font-bold uppercase tracking-wider text-xs shadow-glow hover:shadow-blueGlow transition-transform">
+            Confirm Technician Dispatch
+          </button>
+        </form>
+      </div>
+
+      <!-- Submit Success view -->
+      <div id="booking-success-view" class="hidden text-center py-10 flex flex-col items-center justify-center space-y-4">
+        <span class="w-16 h-16 rounded-full bg-khuvo-cyan/15 border border-khuvo-cyan/40 text-khuvo-cyan flex items-center justify-center text-3xl animate-bounce">✓</span>
+        <h3 class="text-2xl font-bold font-display text-white">Slot Reserved!</h3>
+        <p class="text-xs text-khuvo-slate max-w-xs leading-relaxed">Direct connection to WhatsApp Dispatch line initiated to lock slot #KHV-77.</p>
+        <span class="text-[10px] px-3 py-1 bg-white/5 border border-white/10 text-khuvo-cyan font-bold rounded-full">Connecting to API...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CORE INTERACTIVE STATE SCRIPTING ==================== -->
+  <script>
+    // ---------------- BEFORE / AFTER DRAG LOGIC ----------------
+    const container = document.getElementById("slider-container");
+    const overlay = document.getElementById("slider-overlay");
+    const handle = document.getElementById("slider-handle");
+    let activeSliderTab = "solar";
+    let isDraggingSlider = false;
+
+    function moveSlider(clientX) {
+      const rect = container.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+      overlay.style.width = `${percent}%`;
+      handle.style.left = `${percent}%`;
+    }
+
+    container.addEventListener("mousedown", () => { isDraggingSlider = true; });
+    document.addEventListener("mouseup", () => { isDraggingSlider = false; });
+    container.addEventListener("mousemove", (e) => {
+      if (isDraggingSlider) moveSlider(e.clientX);
+    });
+
+    // Touch support for mobiles
+    container.addEventListener("touchstart", () => { isDraggingSlider = true; }, { passive: true });
+    document.addEventListener("touchend", () => { isDraggingSlider = false; });
+    container.addEventListener("touchmove", (e) => {
+      if (isDraggingSlider) moveSlider(e.touches[0].clientX);
+    }, { passive: true });
+
+    function toggleSliderTab(tabId) {
+      // Toggle active states on tab elements
+      ["solar", "tank", "car"].forEach((tab) => {
+        const btn = document.getElementById(`tab-${tab}`);
+        const after = document.getElementById(`after-${tab}`);
+        const before = document.getElementById(`before-${tab}`);
+        
+        if (tab === tabId) {
+          btn.className = "px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-khuvo-cyan text-khuvo-navy font-display shadow-glow";
+          after.classList.remove("hidden");
+          before.classList.remove("hidden");
+        } else {
+          btn.className = "px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-white font-display hover:bg-white/10";
+          after.classList.add("hidden");
+          before.classList.add("hidden");
+        }
+      });
+      activeSliderTab = tabId;
+      // Reset position to center
+      overlay.style.width = "50%";
+      handle.style.left = "50%";
+    }
+
+    // ---------------- PRICING ENGINE STATE ----------------
+    let calcCategory = "solar";
+    let solarPanelsVal = 15;
+    let tankLitersVal = 1000;
+    let carTypeVal = "sedan";
+    let bikeTypeVal = "sports";
+    let freqCycleVal = "onetime";
+
+    function setCalcCategory(cat) {
+      ["solar", "tank", "car", "bike"].forEach((c) => {
+        const btn = document.getElementById(`btn-cat-${c}`);
+        const control = document.getElementById(`calc-control-${c}`);
+        if (c === cat) {
+          btn.className = "p-3 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all flex flex-col items-center gap-2 bg-khuvo-blue/15 border-khuvo-blue text-khuvo-cyan shadow-glow";
+          control.classList.remove("hidden");
+        } else {
+          btn.className = "p-3 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all flex flex-col items-center gap-2 bg-white/5 border-white/10 text-khuvo-slate hover:text-white";
+          control.classList.add("hidden");
+        }
+      });
+      calcCategory = cat;
+      updatePriceEstimate();
+    }
+
+    function setTankLiters(liters) {
+      [500, 1000, 2000, 5000].forEach((lit) => {
+        const btn = document.getElementById(`btn-tank-${lit}`);
+        if (lit === liters) {
+          btn.className = "p-3 rounded-xl border text-xs font-bold bg-khuvo-cyan/15 border-khuvo-cyan text-white";
+        } else {
+          btn.className = "p-3 rounded-xl border text-xs font-bold bg-white/5 border-white/10 text-khuvo-slate hover:text-white";
+        }
+      });
+      tankLitersVal = liters;
+      updatePriceEstimate();
+    }
+
+    function setCarType(type) {
+      ["hatchback", "sedan", "suv"].forEach((t) => {
+        const btn = document.getElementById(`btn-car-${t}`);
+        if (t === type) {
+          btn.className = "p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-khuvo-cyan/15 border-khuvo-cyan text-white";
+        } else {
+          btn.className = "p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-white/5 border-white/10 text-khuvo-slate";
+        }
+      });
+      carTypeVal = type;
+      updatePriceEstimate();
+    }
+
+    function setBikeType(type) {
+      ["standard", "sports"].forEach((t) => {
+        const btn = document.getElementById(`btn-bike-${t}`);
+        if (t === type) {
+          btn.className = "p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-khuvo-cyan/15 border-khuvo-cyan text-white";
+        } else {
+          btn.className = "p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-white/5 border-white/10 text-khuvo-slate";
+        }
+      });
+      bikeTypeVal = type;
+      updatePriceEstimate();
+    }
+
+    function setFrequency(freq) {
+      ["onetime", "quarterly", "monthly"].forEach((f) => {
+        const btn = document.getElementById(`btn-freq-${f}`);
+        if (f === freq) {
+          btn.className = "p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-khuvo-cyan/15 border-khuvo-cyan text-white flex justify-between items-center";
+        } else {
+          btn.className = "p-3 rounded-xl border text-xs font-bold uppercase tracking-wider bg-white/5 border-white/10 text-khuvo-slate hover:text-white flex justify-between items-center";
+        }
+      });
+      freqCycleVal = freq;
+      updatePriceEstimate();
+    }
+
+    function updatePriceEstimate() {
+      let base = 0;
+      if (calcCategory === "solar") {
+        solarPanelsVal = Number(document.getElementById("input-solar-panels").value);
+        document.getElementById("label-solar-panels").innerText = `${solarPanelsVal} Panels`;
+        base = 499 + solarPanelsVal * 40;
+      } else if (calcCategory === "tank") {
+        if (tankLitersVal <= 500) base = 799;
+        else if (tankLitersVal <= 1000) base = 1299;
+        else if (tankLitersVal <= 2000) base = 1999;
+        else base = 3999;
+      } else if (calcCategory === "car") {
+        if (carTypeVal === "hatchback") base = 399;
+        else if (carTypeVal === "sedan") base = 499;
+        else base = 699;
+      } else if (calcCategory === "bike") {
+        base = bikeTypeVal === "standard" ? 199 : 299;
+      }
+
+      let finalPrice = base;
+      let savings = 0;
+
+      if (freqCycleVal === "monthly") {
+        savings = base * 0.20;
+        finalPrice = base - savings;
+      } else if (freqCycleVal === "quarterly") {
+        savings = base * 0.10;
+        finalPrice = base - savings;
+      }
+
+      const roundedPrice = Math.round(finalPrice);
+      const roundedSavings = Math.round(savings);
+
+      document.getElementById("calc-price-display").innerText = `₹${roundedPrice}`;
+      const savingsContainer = document.getElementById("savings-badge-container");
+      const savingsBadge = document.getElementById("savings-badge");
+
+      if (roundedSavings > 0) {
+        savingsContainer.classList.remove("hidden");
+        savingsBadge.innerText = `Subscription Saved: ₹${roundedSavings}!`;
+      } else {
+        savingsContainer.classList.add("hidden");
+      }
+    }
+
+    // Initialize Calculator display
+    updatePriceEstimate();
+
+    // ---------------- MODAL BOOKING FLOW SYSTEM ----------------
+    const modal = document.getElementById("booking-modal");
+    const formView = document.getElementById("booking-form-view");
+    const successView = document.getElementById("booking-success-view");
+
+    function openBookingModal(srvCategory) {
+      modal.classList.remove("hidden");
+      document.getElementById("form-service").value = srvCategory;
+      adjustModalPrice();
+    }
+
+    function closeBookingModal() {
+      modal.classList.add("hidden");
+      formView.classList.remove("hidden");
+      successView.classList.add("hidden");
+    }
+
+    function adjustModalPrice() {
+      const srv = document.getElementById("form-service").value;
+      let price = 999;
+      if (srv === "solar") price = 999;
+      else if (srv === "tank") price = 1299;
+      else if (srv === "car") price = 499;
+      else if (srv === "bike") price = 249;
+      document.getElementById("modal-price-display").innerText = `₹${price}`;
+    }
+
+    function triggerCheckout() {
+      openBookingModal(calcCategory);
+    }
+
+    function handleBookingSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById("form-name").value;
+      const phone = document.getElementById("form-phone").value;
+      const city = document.getElementById("form-city").value;
+      const srv = document.getElementById("form-service").value;
+      const date = document.getElementById("form-date").value;
+      const slot = document.getElementById("form-slot").value;
+      const price = document.getElementById("modal-price-display").innerText;
+
+      if (!name || !phone || !date) return;
+
+      formView.classList.add("hidden");
+      successView.classList.remove("hidden");
+
+      setTimeout(() => {
+        const text = `Hello Khuvo! I just booked a technician slot:
+- Name: ${name}
+- Phone: ${phone}
+- Service: ${srv.toUpperCase()}
+- Hub: ${city}
+- Date: ${date} (${slot})
+- Cost Estimate: ${price}
+
+Please confirm my schedule dispatcher booking!`;
+        window.open(`https://wa.me/919999999999?text=${encodeURIComponent(text)}`, "_blank");
+        closeBookingModal();
+      }, 1500);
+    }
+
+    // ---------------- FAQ INTERACTIVE ACCORDION ----------------
+    function toggleFaq(idx) {
+      const content = document.getElementById(`faq-content-${idx}`);
+      const icon = document.getElementById(`faq-icon-${idx}`);
+      const container = document.getElementById(`faq-${idx}`);
+
+      if (content.classList.contains("hidden")) {
+        content.classList.remove("hidden");
+        icon.innerText = "−";
+        container.className = "rounded-2xl border bg-gradient-to-r from-white/5 to-white/0 border-khuvo-cyan/30 shadow-glow transition-all duration-300";
+      } else {
+        content.classList.add("hidden");
+        icon.innerText = "+";
+        container.className = "rounded-2xl border bg-white/3 border-white/5 transition-all duration-300";
+      }
+    }
+  </script>
+</body>
+</html>
