@@ -98,7 +98,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               <Calendar className="w-4 h-4" /> Book Service Now
             </button>
             <button 
-              onClick={() => window.open("https://wa.me/919999999999?text=Hi%20Khuvo!%20I'm%20interested%20in%20arranging%20a%20professional%20solar%20panel/tank%20cleaning%20inspection.", "_blank")}
+              onClick={() => window.open("https://wa.me/919473747808?text=Hi%20Khuvo!%20I'm%20interested%20in%20arranging%20a%20professional%20solar%20panel/tank%20cleaning%20inspection.", "_blank")}
               className="px-8 py-4 bg-white/5 border border-white/10 rounded-xl text-white font-bold uppercase tracking-wider text-xs hover:bg-white/10 hover:border-khuvo-cyan/40 active:scale-95 transition-all flex items-center justify-center gap-2"
             >
               <MessageSquare className="w-4 h-4" /> WhatsApp Dispatch

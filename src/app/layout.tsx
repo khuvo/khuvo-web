@@ -46,7 +46,7 @@ export default function RootLayout({
     "description": "Tech-enabled, premium solar panel cleaning, water tank sanitization, and doorstep foam washing services in India.",
     "url": "https://khuvo.in",
     "logo": "https://khuvo.in/logo.png",
-    "telephone": "+919999999999",
+    "telephone": "+919473747808",
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
@@ -75,7 +75,7 @@ export default function RootLayout({
     ],
     "sameAs": [
       "https://facebook.com/khuvo.in",
-      "https://instagram.com/khuvo.in",
+      "https://www.instagram.com/khuvo.care/",
       "https://linkedin.com/company/khuvo"
     ]
   };

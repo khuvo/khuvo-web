@@ -38,7 +38,7 @@ export default function Footer({ onOpenBooking }: FooterProps) {
           <div className="flex gap-3">
             {[
               { icon: Facebook, href: "https://facebook.com/khuvo.in" },
-              { icon: Instagram, href: "https://instagram.com/khuvo.in" },
+              { icon: Instagram, href: "https://www.instagram.com/khuvo.care/" },
               { icon: Linkedin, href: "https://linkedin.com/company/khuvo" },
             ].map((soc, idx) => {
               const Icon = soc.icon;
@@ -131,13 +131,13 @@ export default function Footer({ onOpenBooking }: FooterProps) {
 
       {/* Contact Details Grid bar */}
       <div className="max-w-7xl mx-auto px-6 py-6 border-b border-white/5 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-semibold uppercase tracking-wider">
-        <a href="tel:+919999999999" className="flex items-center gap-2 hover:text-white transition-colors">
-          <Phone className="w-4 h-4 text-khuvo-cyan" /> +91 99999 99999
+        <a href="tel:+919473747808" className="flex items-center gap-2 hover:text-white transition-colors">
+          <Phone className="w-4 h-4 text-khuvo-cyan" /> +91 94737 47808
         </a>
         <a href="mailto:support@khuvo.in" className="flex items-center gap-2 hover:text-white transition-colors">
           <Mail className="w-4 h-4 text-khuvo-cyan" /> support@khuvo.in
         </a>
-        <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white transition-colors">
+        <a href="https://wa.me/919473747808" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white transition-colors">
           <MessageSquare className="w-4 h-4 text-khuvo-cyan" /> WhatsApp Operations Support
         </a>
       </div>

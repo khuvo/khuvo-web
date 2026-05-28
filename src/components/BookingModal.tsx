@@ -68,7 +68,7 @@ export default function BookingModal({ isOpen, onClose, initialService = "solar"
 Please confirm my technician booking slot!`;
       
       const encodedMsg = encodeURIComponent(message);
-      window.open(`https://wa.me/919999999999?text=${encodedMsg}`, "_blank");
+      window.open(`https://wa.me/919473747808?text=${encodedMsg}`, "_blank");
     }, 1500);
   };
 
